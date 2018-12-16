@@ -1,0 +1,34 @@
+version: '3'
+services:
+  db:
+    container_name: laravel_db
+    build: ./sql
+    volumes:
+      - ./sql/mysql_data:/var/lib/mysql
+    ports:
+      - '3333:3306'
+    environment:
+     MYSQL_DATABASE: laravel_db
+     MYSQL_USER: user
+     MYSQL_PASSWORD: password
+     MYSQL_ROOT_PASSWORD: password
+    command: --disable-partition-engine-check
+    
+  app:
+    container_name: laravel_php
+    build: ./php
+    depends_on:
+      - db
+    volumes:
+      - .:/var/www/html
+
+  web:
+    container_name: laravel_nginx
+    image: nginx
+    ports:
+      - '8100:80'
+    depends_on:
+      - app
+    volumes:
+      - ./nginx/default.conf:/etc/ngix/conf.d/default.conf
+      - .:/var/www/html
