@@ -1,10 +1,10 @@
 version: '3'
 services:
-  db:
+  sql:
     container_name: laravel_db
-    build: ./sql
+    image: mysql:5.7
     volumes:
-      - ./sql/mysql_data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     ports:
       - '3333:3306'
     environment:
@@ -16,19 +16,21 @@ services:
     
   app:
     container_name: laravel_php
-    build: ./php
+    build: ./docker/php
     depends_on:
-      - db
+      - sql 
     volumes:
-      - .:/var/www/html
+      - ./document_root:/var/www/html
 
   web:
     container_name: laravel_nginx
     image: nginx
     ports:
-      - '8100:80'
+      - '8000:80'
     depends_on:
       - app
     volumes:
-      - ./nginx/default.conf:/etc/ngix/conf.d/default.conf
-      - .:/var/www/html
+      - ./docker/nginx/default.conf:/etc/ngix/conf.d/default.conf
+      - ./document_root:/var/www/html
+volumes:
+  mysql-data:

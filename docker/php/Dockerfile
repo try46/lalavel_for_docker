@@ -1,6 +1,4 @@
-FROM php:7.1-fpm
-
-COPY ./php.ini /usr/local/etc/php/
+FROM php:fpm
 
 RUN cd /usr/bin && curl -s http://getcomposer.org/installer | php && ln -s /usr/bin/composer.phar /usr/bin/composer\ 
 && apt-get -y update\
