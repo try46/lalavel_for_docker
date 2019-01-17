@@ -1,4 +1,4 @@
 sql/mysql_data/*
 advent-20181216/*
-work/laravel-test/*
+!document_root/index.php
 mysql_data
