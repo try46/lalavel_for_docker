@@ -1,4 +1,4 @@
 sql/mysql_data/*
 advent-20181216/*
-!document_root/index.php
+document_root/test
 mysql_data
